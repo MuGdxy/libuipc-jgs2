@@ -16,7 +16,7 @@ target_link_libraries(uipc_geometry PUBLIC
 
 target_compile_definitions(uipc_geometry PRIVATE UIPC_GEOMETRY_EXPORT_DLL=1) # export dll
 
-file(GLOB SOURCES "*.cpp" "*.h" "details/*.inl")
+file(GLOB_RECURSE SOURCES "*.cpp" "*.h" "*.inl")
 target_sources(uipc_geometry PRIVATE ${SOURCES})
 
 uipc_target_set_output_directory(uipc_geometry)
@@ -26,7 +26,3 @@ uipc_target_set_output_directory(uipc_geometry)
 # ------------------------------------------------------------------------------
 file(GLOB_RECURSE SOURCE_GROUP_FILES "*.h" "*.cpp" "*.inl")
 source_group(TREE "${CMAKE_CURRENT_SOURCE_DIR}/.." FILES ${SOURCE_GROUP_FILES})
-
-add_subdirectory(implicit_geometries)
-add_subdirectory(affine_body)
-add_subdirectory(bvh)
