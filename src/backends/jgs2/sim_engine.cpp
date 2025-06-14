@@ -1,90 +1,90 @@
-#include <none_sim_engine.h>
+#include <sim_engine.h>
 #include <backends/common/module.h>
 #include <uipc/common/log.h>
-#include <none_sim_system.h>
+#include <sim_system.h>
 
-namespace uipc::backend::none
+namespace uipc::backend::jgs2
 {
-NoneSimEngine::NoneSimEngine(EngineCreateInfo* info)
-    : SimEngine(info)
+SimEngine::SimEngine(EngineCreateInfo* info)
+    : uipc::backend::SimEngine(info)
 {
     spdlog::info("[NoneEngine] Constructor called.");
-    spdlog::info(R"(Hello, this is the NoneEngine from libuipc backends.
-This engine does nothing, but helps to do the checking of the engine interface.
+    spdlog::info(R"(Hello, this is the JGS2Engine from libuipc backends.
+Now, this engine does nothing, but helps to do the checking of the engine interface.
 And it is a good place to print out some debug information during the life cycle of the engine.
 )");
 }
 
-void NoneSimEngine::do_init(InitInfo& info)
+void SimEngine::do_init(InitInfo& info)
 {
     spdlog::info("[NoneEngine] do_init() called.");
 
     build_systems();
 
-    m_system = &require<NoneSimSystem>();
+    m_system = &require<SimSystem>();
 
     dump_system_info();
 }
 
-void NoneSimEngine::do_advance()
+void SimEngine::do_advance()
 {
     m_frame++;
     spdlog::info("[NoneEngine] do_advance() called.");
 }
 
-void NoneSimEngine::do_sync()
+void SimEngine::do_sync()
 {
     spdlog::info("[NoneEngine] do_sync() called.");
 }
 
-void NoneSimEngine::do_retrieve()
+void SimEngine::do_retrieve()
 {
     spdlog::info("[NoneEngine] do_receive() called.");
 }
 
-NoneSimEngine::~NoneSimEngine()
+SimEngine::~SimEngine()
 {
     spdlog::info("[NoneEngine] Destructor called.");
 }
 
 
-SizeT NoneSimEngine::get_frame() const
+SizeT SimEngine::get_frame() const
 {
     return m_frame;
 }
-bool NoneSimEngine::do_dump(DumpInfo&)
+bool SimEngine::do_dump(DumpInfo&)
 {
     // Now just do nothing
     return true;
 }
 
-void NoneSimEngine::do_backward()
+void SimEngine::do_backward()
 {
     // Do nothing
 }
 
-bool NoneSimEngine::do_try_recover(RecoverInfo&)
+bool SimEngine::do_try_recover(RecoverInfo&)
 {
     // Now just do nothing
     return true;
 }
 
-void NoneSimEngine::do_apply_recover(RecoverInfo& info)
+void SimEngine::do_apply_recover(RecoverInfo& info)
 {
     // If success, set the current frame to the recovered frame
     m_frame = info.frame();
 }
 
-void NoneSimEngine::do_clear_recover(RecoverInfo& info)
+void SimEngine::do_clear_recover(RecoverInfo& info)
 {
     // If failed, do nothing
 }
-}  // namespace uipc::backend::none
+}  // namespace uipc::backend::jgs2
 
 
 UIPC_BACKEND_API EngineInterface* uipc_create_engine(EngineCreateInfo* info)
 {
-    return new uipc::backend::none::NoneSimEngine(info);
+    return new uipc::backend::jgs2::SimEngine(info);
 }
 
 UIPC_BACKEND_API void uipc_destroy_engine(EngineInterface* engine)

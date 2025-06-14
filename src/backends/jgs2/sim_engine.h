@@ -2,14 +2,14 @@
 #include <uipc/backend/macro.h>
 #include <backends/common/sim_engine.h>
 
-namespace uipc::backend::none
+namespace uipc::backend::jgs2
 {
-class NoneSimSystem;
-class NoneSimEngine final : public SimEngine
+class SimSystem;
+class SimEngine final : public backend::SimEngine
 {
   public:
-    NoneSimEngine(EngineCreateInfo*);
-    ~NoneSimEngine();
+    SimEngine(EngineCreateInfo*);
+    ~SimEngine();
 
   private:
     void         do_init(InitInfo&) override;
@@ -24,7 +24,7 @@ class NoneSimEngine final : public SimEngine
     void  do_retrieve() override;
     SizeT get_frame() const override;
 
-    NoneSimSystem* m_system = nullptr;
-    SizeT          m_frame  = 0;
+    SimSystem* m_system = nullptr;
+    SizeT      m_frame  = 0;
 };
-}  // namespace uipc::backend::none
+}  // namespace uipc::backend::jgs2
